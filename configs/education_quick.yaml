@@ -1,0 +1,49 @@
+run:
+  name: education_quick
+  out_dir: outputs
+  # Quick smoke test: still multi-seed to catch instability
+  seeds: [1, 2, 3, 4, 5]
+
+data:
+  name: education_A
+  # Quick setting: smaller N for faster turnaround
+  n_students: 5000
+  n_schools: 50
+  bias:
+    measurement_noise_by_group: 0.25
+    missingness_by_group: 0.25
+    drift_strength: 0.20
+
+models:
+  # Keep it minimal in QUICK
+  baselines: [lr]
+
+policy:
+  topk_grid: [800, 1000, 1500]
+  gamma_grid: [0.05, 0.10, 0.15]
+  expl_k: 10
+
+ecl:
+  # IMPORTANT: prevent SES from being used as a predictive feature (audit-only attribute)
+  forbidden_features: [ses]
+  abstention_enabled: true
+
+  fairness_primary_attribute: ses
+  fairness_max_eopp_gap: 0.10
+  explainability_max_features: 10
+  # Relaxed as requested
+  explainability_max_entropy: 1.60
+
+mas:
+  perf_min_auc: 0.65
+  fairness_max_eopp_gap: 0.10
+  explainability_max_features: 10
+  explainability_max_entropy: 1.60
+  cost_max_latency_ms: 2000.0
+
+baselines:
+  fairness_postprocessing:
+    enabled: true
+
+export:
+  overleaf_dropin: true

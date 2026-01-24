@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Compass ECL + MAS: Constraint-based ethical governance for AI-assisted educational decision support"
+type: software
+authors:
+  - given-names: Tales
+    family-names: Matos
+repository-code: "https://github.com/rtales/compass-ecl-mas"
+url: "https://github.com/rtales/compass-ecl-mas"
+license: MIT
+version: "0.1.0"
+date-released: "2026-01-21"
+keywords:
+  - responsible AI
+  - public sector
+  - educational decision support
+  - fairness
+  - interpretability
+  - multi-objective optimization
+  - Pareto frontier
+  - ethical constraints
+  - moral alignment

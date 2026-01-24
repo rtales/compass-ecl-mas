@@ -1,0 +1,131 @@
+Metadata-Version: 2.4
+Name: compass-ecl-mas
+Version: 0.2.0
+Summary: Constraint-based ethical governance layer (ECL) and Moral Alignment Score (MAS) for public-sector education decision support, with Pareto evaluation and reproducible artifacts.
+Author: Tales Matos
+License: MIT
+Keywords: responsible-ai,governance,fairness,education,pareto,public-sector,reproducibility
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.24
+Requires-Dist: pandas>=2.0
+Requires-Dist: scikit-learn>=1.3
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: matplotlib>=3.7
+Provides-Extra: ui
+Requires-Dist: streamlit>=1.32; extra == "ui"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4; extra == "dev"
+Requires-Dist: ruff>=0.5.0; extra == "dev"
+Dynamic: license-file
+
+# Compass ECL + MAS (Education, Public Sector)
+
+Constraint-based ethical governance for AI-assisted educational decision support in the public sector.
+
+This repository provides:
+- **Compass Framework** operationalization via an **Ethical Constraint Layer (ECL)** and a **Moral Alignment Score (MAS)**.
+- A **fully reproducible** experimental pipeline on **simulated education data** (default **N=20k**, configurable).
+- Strong baselines (LR/RF/GBDT) plus a **simple fairness post-processing baseline** (Equal Opportunity).
+- **Multi-objective (Pareto) analysis** across performance, fairness, explainability proxies, cost, and abstention (human review).
+- An optional **Streamlit UI** to calibrate parameters and export artifacts for the paper (**Overleaf drop-in**).
+
+> **Paper artifacts (seed=5, N=20k)** are included under `artifacts/overleaf_dropin_seed5_n20000/` as a reproducible “sanity-check” bundle.
+> For journal results, run multi-seed experiments and report mean ± std (see below).
+
+---
+
+## Quickstart (CLI)
+
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -U pip
+pip install -e ".[ui]"
+```
+
+Run a quick end-to-end pipeline:
+```bash
+python -m compass_ecl_mas.cli.run_all --config configs/education_quick.yaml
+```
+
+Run a paper-style configuration (heavier):
+```bash
+python -m compass_ecl_mas.cli.run_all --config configs/education_paper.yaml
+```
+
+Outputs are written to:
+- `outputs/<run_id>/` (metrics CSVs, Pareto set, MAS-selected, plots)
+- `outputs/<run_id>/overleaf_dropin/` (drop-in figures/tables for the Overleaf paper)
+
+---
+
+## Demo (UI)
+
+```bash
+streamlit run app/streamlit_app.py
+```
+
+The UI lets you:
+- change `Top-K`, `gamma` (abstention), and constraint thresholds
+- view metrics and Pareto trade-offs
+- export results as **Overleaf drop-in** artifacts
+
+---
+
+## Repository structure
+
+- `src/compass_ecl_mas/` — core library (simulation, models, ECL, MAS, Pareto, reporting)
+- `configs/` — experiment configs (quick + paper)
+- `app/` — Streamlit UI (demo/calibration/export)
+- `scripts/` — helper scripts (e.g., generate/freeze data)
+- `artifacts/overleaf_dropin_seed5_n20000/` — bundled paper artifacts (figures, tables, trace CSVs)
+- `docs/wiki/` — GitHub Wiki pages (Markdown) ready to push
+
+---
+
+## Reproducibility checklist (high level)
+
+- ✅ deterministic seeds (configurable)
+- ✅ pinned dependencies via `pyproject.toml`
+- ✅ export of raw candidate metrics + Pareto set + MAS selection (CSV)
+- ✅ export of paper-ready tables/figures (Overleaf drop-in)
+- ✅ trace files included for verification
+
+See: **Wiki → Reproducibility & Artifacts**.
+
+---
+
+## How to cite
+
+Please cite the associated paper and this repository.
+
+- **Repository:** `rtales/compass-ecl-mas`
+- **Author:** Tales Matos
+- **Google Scholar:** https://scholar.google.com/citations?hl=en&user=ZzUMUXkAAAAJ
+- **LinkedIn:** https://www.linkedin.com/in/tales-matos/
+
+A ready-to-use citation entry is provided in:
+- `CITATION.cff`
+- `CITATION.bib`
+
+---
+
+## License
+
+This project is released under the **MIT License** (see `LICENSE`).
+MIT already requires preservation of copyright and license notice in redistributions.
+
+---
+
+## Notes for reviewers / journal runs
+
+The included artifact bundle (`artifacts/overleaf_dropin_seed5_n20000/`) is a single-seed reproducible snapshot.
+For journal-quality reporting, run multi-seed experiments and report mean ± std + robustness sweeps (noise/missingness/drift).
+
+---
+
+## Contact
+
+Tales Matos — https://www.linkedin.com/in/tales-matos/

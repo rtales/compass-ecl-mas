@@ -1,0 +1,21 @@
+services:
+  ui:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./outputs:/app/outputs
+      - ./data:/app/data
+    command: >
+      streamlit run app/streamlit_app.py
+      --server.port=8501
+      --server.address=0.0.0.0
+
+  cli:
+    build: .
+    volumes:
+      - ./outputs:/app/outputs
+      - ./data:/app/data
+    command: >
+      python -m compass_ecl_mas.cli.run_all
+      --config configs/education_systems_v1.yaml

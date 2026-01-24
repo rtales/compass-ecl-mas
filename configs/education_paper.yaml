@@ -1,0 +1,67 @@
+run:
+  name: education_paper
+  out_dir: outputs
+  seeds:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+data:
+  name: education_A
+  n_students: 20000
+  n_schools: 100
+  bias:
+    measurement_noise_by_group: 0.25
+    missingness_by_group: 0.25
+    drift_strength: 0.2
+models:
+  baselines:
+  - lr
+  - rf
+  - gbdt
+policy:
+  topk_grid:
+  - 500
+  - 800
+  - 1000
+  - 1500
+  - 2000
+  gamma_grid:
+  - 0.0
+  - 0.05
+  - 0.1
+  - 0.15
+  - 0.2
+  expl_k: 10
+ecl:
+  forbidden_features:
+  - ses
+  abstention_enabled: true
+  fairness_primary_attribute: ses
+  fairness_max_eopp_gap: 0.1
+  explainability_max_features: 10
+  explainability_max_entropy: 1.6
+mas:
+  perf_min_auc: 0.7
+  fairness_max_eopp_gap: 0.1
+  explainability_max_features: 10
+  explainability_max_entropy: 1.6
+  cost_max_latency_ms: 2000.0
+baselines:
+  fairness_postprocessing:
+    enabled: true
+  fairlearn_reductions:
+    enabled: true
+    method: exponentiated_gradient
+    base_estimator: lr
+    eps_grid:
+    - 0.0
+    - 0.02
+    - 0.05
+    - 0.1
+    - 0.15
+    - 0.2
+    max_iter: 50
+export:
+  overleaf_dropin: true
